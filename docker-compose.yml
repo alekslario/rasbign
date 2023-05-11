@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  rasbign:
+    container_name: rasbign
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rasbign
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "2g"
+    environment:
+      - DISCORD_PASSWORD
+      - DISCORD_EMAIL
+      - DISCORD_SERVER_NAME
+      - CAPTCHA_API_KEY
+    ports:
+      - "8080:8080"
+    volumes:
+      - /usr/src/rasbign/node_modules
+      - ./src:/usr/src/rasbign

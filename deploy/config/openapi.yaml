@@ -1,0 +1,51 @@
+swagger: "2.0"
+info:
+  title: Rasbign API
+  description: Sample API on API Gateway with a Cloud Run backend
+  version: 1.0.0
+schemes:
+  - https
+produces:
+  - application/json
+x-google-backend:
+  address: ${cloudrun_service_url}
+  deadline: 600.0
+x-google-allow: configured
+# x-google-jwt-locations:
+#   # Expect header "Authorization": "Bearer <TOKEN>"
+#   - header: "Authorization"
+#     value_prefix: "Bearer "
+x-google-management:
+  metrics:
+    - name: "rasbign-metric"
+      displayName: "rasbign quota"
+      valueType: INT64
+      metricKind: DELTA
+  quota:
+    limits:
+      - name: "rasbign-request-limit"
+        metric: "rasbign-metric"
+        unit: "1/min/{project}"
+        values:
+          STANDARD: 1
+paths:
+  /rasbign:
+    get:
+      summary: Cloud Run hello world
+      operationId: hello
+      responses:
+        "200":
+          description: A successful response
+          schema:
+            type: string
+      security:
+        - api_key_header: []
+      x-google-quota:
+        metricCosts:
+          "rasbign-metric": 1
+securityDefinitions:
+  #https://stackoverflow.com/questions/65683004/google-api-gateway-provide-api-key-in-header
+  api_key_header:
+    type: apiKey
+    name: x-api-key
+    in: header

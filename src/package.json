@@ -1,0 +1,17 @@
+{
+  "name": "rasbign",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "2captcha": "^3.0.5",
+    "express": "^4.18.2",
+    "puppeteer": "15.3.1"
+  }
+}
